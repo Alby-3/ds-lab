@@ -28,46 +28,46 @@ int precedence(char c) {
         return 0;
     }
 }
-void infixToPostfix(char *infix, char *postfix) {
-    int i,j = 0;
-    for (i=0;i<strlen(infix);i++) {
-        if (isspace(infix[i])) {
+void infixToPostfix(char *infix, char *postfix) 
+{
+    int i, j = 0;
+
+    for (i = 0; i < strlen(infix); i++) 
+    {
+        if (isspace(infix[i])) 
+	{
             continue;
         }
         if (isalnum(infix[i])) {
             postfix[j++] = infix[i];
-        } else if (infix[i] == '(')
-        {
+        } else if (infix[i] == '(') {
             push(infix[i]);
-        } 
-        else if (infix[i]==')')
-         {
-            while (stack[top]!='(') 
-            {
-           postfix[j++]=pop();
+        } else if (infix[i] == ')') {
+            while (stack[top] != '(') {
+                postfix[j++] = pop();
             }
             pop();
-        } 
-        else  {
+        } else {
             while (top != -1 && precedence(stack[top]) >= precedence(infix[i])) {
                 postfix[j++] = pop();
             }
             push(infix[i]);
         }
     }
-    while (top != -1) 
-    {
+    while (top != -1) {
         postfix[j++] = pop();
     }
     postfix[j] = '\0';
 }
-int main()  
-{
+int main() {
     char infix[MAX], postfix[MAX];
+
     printf("Enter infix expression: ");
     fgets(infix, MAX, stdin);
-    infix[strcspn(infix, "\n")] = 0;
+    infix[strcspn(infix, "\n")] = 0; 
     infixToPostfix(infix, postfix);
     printf("Postfix expression: %s\n", postfix);
     return 0;
 }
+
+	
